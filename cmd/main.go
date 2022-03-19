@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	serv "github.com/Shin0kari/go_max"
 	"github.com/Shin0kari/go_max/package/handler"
 )
 
@@ -14,5 +15,3 @@ func main() {
 		log.Fatalf("error occured while running http server: %s", err.Error())
 	}
 }
-
-//1
