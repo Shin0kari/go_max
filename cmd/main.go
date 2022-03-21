@@ -7,6 +7,7 @@ import (
 	"github.com/Shin0kari/go_max/package/handler"
 	"github.com/Shin0kari/go_max/package/repository"
 	"github.com/Shin0kari/go_max/package/service"
+	_ "github.com/lib/pq"
 	"github.com/spf13/viper"
 )
 
@@ -15,8 +16,20 @@ func main() {
 		log.Fatalf("error initializing configs: %s", err.Error())
 	}
 
+	db, err := repository.NewPostgresDB(repository.Config{
+		Host:     "localhost",
+		Port:     "5436",
+		Username: "postgres",
+		DBName:   "postgres",
+		SSLMode:  "disable",
+		Password: "9865guide",
+	})
+	if err != nil {
+		log.Fatalf("failed to initialize db: %s", err.Error())
+	}
+
 	// добавляем указатели на сервисы
-	rep := repository.NewRepository()
+	rep := repository.NewRepository(db)
 	// конструктор для внедрения зависимостей сервиса
 	services := service.NewService(rep)
 	handlers := handler.NewHandler(services)
