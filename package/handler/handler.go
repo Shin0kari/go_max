@@ -1,10 +1,16 @@
 package handler
 
 import (
+	"github.com/Shin0kari/go_max/package/service"
 	"github.com/gin-gonic/gin"
 )
 
 type Handler struct {
+	services *service.Service
+}
+
+func NewHandler(services *service.Service) *Handler {
+	return &Handler{services: services}
 }
 
 // инициализирует endpoints(как я понял, функции)
