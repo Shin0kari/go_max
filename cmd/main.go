@@ -2,11 +2,13 @@ package main
 
 import (
 	"log"
+	"os"
 
 	serv "github.com/Shin0kari/go_max"
 	"github.com/Shin0kari/go_max/package/handler"
-	"github.com/Shin0kari/go_max/package/repository"
-	"github.com/Shin0kari/go_max/package/service"
+	rep "github.com/Shin0kari/go_max/package/repository"
+	sv "github.com/Shin0kari/go_max/package/service"
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"github.com/spf13/viper"
 )
@@ -16,26 +18,30 @@ func main() {
 		log.Fatalf("error initializing configs: %s", err.Error())
 	}
 
-	db, err := repository.NewPostgresDB(repository.Config{
-		Host:     "localhost",
-		Port:     "5436",
-		Username: "postgres",
-		DBName:   "postgres",
-		SSLMode:  "disable",
-		Password: "9865guide",
+	if err := godotenv.Load(); err != nil {
+		log.Fatalf("error loading env variables: %s", err.Error())
+	}
+
+	db, err := rep.NewPostgresDB(rep.Config{
+		Host:     viper.GetString("db.host"),
+		Port:     viper.GetString("db.port"),
+		Username: viper.GetString("db.username"),
+		DBName:   viper.GetString("db.dbname"),
+		SSLMode:  viper.GetString("db.sslmode"),
+		Password: os.Getenv("DB_PASSWORD"),
 	})
 	if err != nil {
 		log.Fatalf("failed to initialize db: %s", err.Error())
 	}
 
 	// добавляем указатели на сервисы
-	rep := repository.NewRepository(db)
+	rep := rep.NewRepository(db)
 	// конструктор для внедрения зависимостей сервиса
-	services := service.NewService(rep)
+	services := sv.NewService(rep)
 	handlers := handler.NewHandler(services)
 
 	srv := new(serv.Server)
-	if err := srv.Run(viper.GetString("8000"), handlers.InitRoutes()); err != nil {
+	if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
 		log.Fatalf("error occured while running http server: %s", err.Error())
 	}
 }
