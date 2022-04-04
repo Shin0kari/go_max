@@ -1,27 +1,32 @@
 package main
 
 import (
-	"log"
 	"os"
 
 	serv "github.com/Shin0kari/go_max"
 	"github.com/Shin0kari/go_max/package/handler"
 	rep "github.com/Shin0kari/go_max/package/repository"
 	sv "github.com/Shin0kari/go_max/package/service"
+
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
 func main() {
+	// задаём для логов формат json
+	logrus.SetFormatter(new(logrus.JSONFormatter))
 	if err := initConfig(); err != nil {
-		log.Fatalf("error initializing configs: %s", err.Error())
+		logrus.Fatalf("error initializing configs: %s", err.Error())
 	}
 
+	// загружаем из файла .env данные, чтобы передать в иниц бд
 	if err := godotenv.Load(); err != nil {
-		log.Fatalf("error loading env variables: %s", err.Error())
+		logrus.Fatalf("error loading env variables: %s", err.Error())
 	}
 
+	// инициализация бд
 	db, err := rep.NewPostgresDB(rep.Config{
 		Host:     viper.GetString("db.host"),
 		Port:     viper.GetString("db.port"),
@@ -31,7 +36,7 @@ func main() {
 		Password: os.Getenv("DB_PASSWORD"),
 	})
 	if err != nil {
-		log.Fatalf("failed to initialize db: %s", err.Error())
+		logrus.Fatalf("failed to initialize db: %s", err.Error())
 	}
 
 	// добавляем указатели на сервисы
@@ -42,7 +47,7 @@ func main() {
 
 	srv := new(serv.Server)
 	if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
-		log.Fatalf("error occured while running http server: %s", err.Error())
+		logrus.Fatalf("error occured while running http server: %s", err.Error())
 	}
 }
 

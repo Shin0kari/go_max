@@ -1,11 +1,23 @@
 package repository
 
+// логика подключения бд + имена таблиц
+
 import (
 	"fmt"
 
 	"github.com/jmoiron/sqlx"
 )
 
+// названия таблиц из бд
+const (
+	usersTable      = "users"
+	dataListsTable  = "data_lists"
+	usersListsTable = "users_lists"
+	dataItemTable   = "data_items"
+	listsItemsTable = "lists_items"
+)
+
+// параметры для подкл бд
 type Config struct {
 	Host     string
 	Port     string

@@ -1,9 +1,15 @@
 //заготовки интерфейсов для сущностей
 package service
 
-import "github.com/Shin0kari/go_max/package/repository"
+import (
+	serv "github.com/Shin0kari/go_max"
+	"github.com/Shin0kari/go_max/package/repository"
+)
 
 type Authorization interface {
+	// возвращает id созданного пользователя
+	CreateUser(user serv.User) (int, error)
+	GenerateToken(username, password string) (string, error)
 }
 
 type DataList interface {
@@ -21,6 +27,8 @@ type Service struct {
 
 // конструктор для сервисов
 // сервисы обращаются к базе данных и поэтому объявляем указатель на репозиторий
-func NewService(rep *repository.Repository) *Service {
-	return &Service{}
+func NewService(repos *repository.Repository) *Service {
+	return &Service{
+		Authorization: NewAuthService(repos.Authorization),
+	}
 }
