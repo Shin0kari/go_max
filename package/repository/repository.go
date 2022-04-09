@@ -5,7 +5,7 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-type Authorization interface {
+type RepAuthorization interface {
 	CreateUser(user serv.User) (int, error)
 	GetUser(username, password string) (serv.User, error)
 }
@@ -17,13 +17,13 @@ type DataItem interface {
 }
 
 type Repository struct {
-	Authorization
+	RepAuthorization
 	DataList
 	DataItem
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
-		Authorization: NewAuthPostgres(db),
+		RepAuthorization: NewAuthPostgres(db),
 	}
 }
