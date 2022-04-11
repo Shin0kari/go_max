@@ -1,6 +1,6 @@
 package serv
 
-type dataList struct {
+type DataList struct {
 	Id          int    `json:"id"`
 	Title       string `json:"title"`
 	Description string `json:"description"`
@@ -12,7 +12,7 @@ type UsersLists struct {
 	ListId int
 }
 
-type dataItem struct {
+type DataItem struct {
 	Id          int    `json:"id"`
 	Title       string `json:"title"`
 	Description string `json:"description"`
