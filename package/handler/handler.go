@@ -27,7 +27,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	}
 
 	//для работы endpoints с дисками и их задачами
-	api := router.Group("/api")
+	api := router.Group("/api", h.userIndentity)
 	{
 		// группа для работы со списками
 		lists := api.Group("/lists")

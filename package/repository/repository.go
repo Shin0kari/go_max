@@ -5,7 +5,7 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-type RepAuthorization interface {
+type Authorization interface {
 	CreateUser(user serv.User) (int, error)
 	GetUser(username, password string) (serv.User, error)
 }
