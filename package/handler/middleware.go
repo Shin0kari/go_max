@@ -13,7 +13,7 @@ const (
 )
 
 func (h *Handler) userIndentity(c *gin.Context) {
-	header := c.GetHeader(authorizationHeader)
+	header := c.GetHeader("Autorization")
 
 	if header == "" {
 		newErrorResponse(c, http.StatusUnauthorized, "empty auth header")
@@ -23,11 +23,6 @@ func (h *Handler) userIndentity(c *gin.Context) {
 	headerParts := strings.Split(header, " ")
 	if len(headerParts) != 2 {
 		newErrorResponse(c, http.StatusUnauthorized, "invalid auth header")
-		return
-	}
-
-	if len(headerParts[1]) == 0 {
-		newErrorResponse(c, http.StatusUnauthorized, "token is empty")
 		return
 	}
 
