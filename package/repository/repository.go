@@ -17,13 +17,13 @@ type DataItem interface {
 }
 
 type Repository struct {
-	RepAuthorization
+	Authorization
 	DataList
 	DataItem
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
-		RepAuthorization: NewAuthPostgres(db),
+		Authorization: NewAuthPostgres(db),
 	}
 }

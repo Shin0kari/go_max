@@ -10,6 +10,7 @@ type Authorization interface {
 	// возвращает id созданного пользователя
 	CreateUser(user serv.User) (int, error)
 	GenerateToken(username, password string) (string, error)
+	ParseToken(token string) (int, error)
 }
 
 type DataList interface {
