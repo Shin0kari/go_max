@@ -5,7 +5,6 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 )
 
 const (
@@ -15,8 +14,6 @@ const (
 
 func (h *Handler) userIndentity(c *gin.Context) {
 	header := c.GetHeader(authorizationHeader)
-
-	logrus.Printf("header:<<%s>>", header)
 
 	if header == "" {
 		newErrorResponse(c, http.StatusUnauthorized, "empty auth header")
