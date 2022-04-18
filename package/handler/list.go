@@ -32,8 +32,25 @@ func (h *Handler) createList(c *gin.Context) {
 	})
 }
 
-func (h *Handler) getALLLists(c *gin.Context) {
+type getAllListsResponse struct {
+	Data []serv.DataList `json:"data"`
+}
 
+func (h *Handler) getALLLists(c *gin.Context) {
+	userId, err := getUserId(c)
+	if err != nil {
+		return
+	}
+
+	lists, err := h.services.DataList.GetAll(userId)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, getAllListsResponse{
+		Data: lists,
+	})
 }
 
 func (h *Handler) getListById(c *gin.Context) {

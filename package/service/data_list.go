@@ -16,3 +16,7 @@ func NewDataListService(repo repository.DataList) *DataListService {
 func (s *DataListService) Create(userId int, list serv.DataList) (int, error) {
 	return s.repo.Create(userId, list)
 }
+
+func (s *DataListService) GetAll(userId int) ([]serv.DataList, error) {
+	return s.repo.GetAll(userId)
+}

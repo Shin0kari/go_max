@@ -15,6 +15,7 @@ type Authorization interface {
 
 type DataList interface {
 	Create(userId int, list serv.DataList) (int, error)
+	GetAll(userId int) ([]serv.DataList, error)
 }
 
 type DataItem interface {

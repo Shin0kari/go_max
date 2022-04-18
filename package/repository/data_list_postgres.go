@@ -38,3 +38,13 @@ func (r *DataListPostgres) Create(userId int, list serv.DataList) (int, error) {
 
 	return id, tx.Commit()
 }
+
+func (r *DataListPostgres) GetAll(userId int) ([]serv.DataList, error) {
+	var lists []serv.DataList
+
+	query := fmt.Sprintf("SELECT * FROM %s tl INNER JOIN %s ul on tl.id = ul.list_id WHERE ul.user_id = $1",
+		dataListsTable, usersListsTable)
+	err := r.db.Select(&lists, query, userId)
+
+	return lists, err
+}
