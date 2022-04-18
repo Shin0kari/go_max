@@ -24,3 +24,7 @@ func (s *DataListService) GetAll(userId int) ([]serv.DataList, error) {
 func (s *DataListService) GetById(userId, listId int) (serv.DataList, error) {
 	return s.repo.GetById(userId, listId)
 }
+
+func (s *DataListService) Delete(userId, listId int) error {
+	return s.repo.Delete(userId, listId)
+}
