@@ -14,6 +14,7 @@ type Authorization interface {
 }
 
 type DataList interface {
+	Create(userId int, list serv.DataList) (int, error)
 }
 
 type DataItem interface {
@@ -31,5 +32,6 @@ type Service struct {
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
 		Authorization: NewAuthService(repos.Authorization),
+		DataList:      NewDataListService(repos.DataList),
 	}
 }
