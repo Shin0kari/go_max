@@ -11,6 +11,7 @@ type Authorization interface {
 }
 
 type DataList interface {
+	Create(userId int, list serv.DataList) (int, error)
 }
 
 type DataItem interface {
@@ -25,5 +26,6 @@ type Repository struct {
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: NewAuthPostgres(db),
+		DataList:      NewDataListPostgres(db),
 	}
 }
