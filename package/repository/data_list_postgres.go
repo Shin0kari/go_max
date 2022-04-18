@@ -2,9 +2,11 @@ package repository
 
 import (
 	"fmt"
+	"strings"
 
 	serv "github.com/Shin0kari/go_max"
 	"github.com/jmoiron/sqlx"
+	"github.com/sirupsen/logrus"
 )
 
 type DataListPostgres struct {
@@ -64,5 +66,39 @@ func (r *DataListPostgres) Delete(userId, listId int) error {
 		dataListsTable, usersListsTable)
 	_, err := r.db.Exec(query, userId, listId)
 
+	return err
+}
+
+func (r *DataListPostgres) Update(userId, listId int, input serv.UpdateListInput) error {
+	setValues := make([]string, 0)
+	args := make([]interface{}, 0)
+	argId := 1
+
+	if input.Title != nil {
+		setValues = append(setValues, fmt.Sprintf("title=$1", argId))
+		args = append(args, *input.Title)
+		argId++
+	}
+
+	if input.Description != nil {
+		setValues = append(setValues, fmt.Sprintf("description=$1", argId))
+		args = append(args, *input.Description)
+		argId++
+	}
+
+	// title=$1
+	// description=$2
+	// title=$1, description=$2
+	setQuery := strings.Join(setValues, ", ")
+
+	query := fmt.Sprintf("UPDATE %s tl SET %s FROM %s ul WHERE tl.id = ul.list_id AND ul.list_id=$%d AND ul.user_id=$%d",
+		dataListsTable, setQuery, usersListsTable, argId, argId+1)
+
+	args = append(args, listId, userId)
+
+	logrus.Debugf("update Query: %s", query)
+	logrus.Debugf("args: %s", args)
+
+	_, err := r.db.Exec(query, args...)
 	return err
 }

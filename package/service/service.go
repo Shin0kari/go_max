@@ -18,6 +18,7 @@ type DataList interface {
 	GetAll(userId int) ([]serv.DataList, error)
 	GetById(userId, listId int) (serv.DataList, error)
 	Delete(userId, listId int) error
+	Update(userId, listId int, input serv.UpdateListInput) error
 }
 
 type DataItem interface {

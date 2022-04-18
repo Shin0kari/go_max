@@ -28,3 +28,10 @@ func (s *DataListService) GetById(userId, listId int) (serv.DataList, error) {
 func (s *DataListService) Delete(userId, listId int) error {
 	return s.repo.Delete(userId, listId)
 }
+
+func (s *DataListService) Update(userId, listId int, input serv.UpdateListInput) error {
+	if err := input.Validate(); err != nil {
+		return err
+	}
+	return s.repo.Update(userId, listId, input)
+}
