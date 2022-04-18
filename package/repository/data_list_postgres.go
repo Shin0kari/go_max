@@ -48,3 +48,12 @@ func (r *DataListPostgres) GetAll(userId int) ([]serv.DataList, error) {
 
 	return lists, err
 }
+
+func (r *DataListPostgres) GetById(userId, listId int) (serv.DataList, error) {
+	var list serv.DataList
+
+	query := fmt.Sprintf("SELECT tl.id, tl.title, tl.description FROM %s tl INNER JOIN %s ul on tl.id = ul.list_id WHERE ul.user_id = $1 AND ul.list_id = $2", dataListsTable, usersListsTable)
+	err := r.db.Get(&list, query, userId, listId)
+
+	return list, err
+}

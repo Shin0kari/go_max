@@ -20,3 +20,7 @@ func (s *DataListService) Create(userId int, list serv.DataList) (int, error) {
 func (s *DataListService) GetAll(userId int) ([]serv.DataList, error) {
 	return s.repo.GetAll(userId)
 }
+
+func (s *DataListService) GetById(userId, listId int) (serv.DataList, error) {
+	return s.repo.GetById(userId, listId)
+}
