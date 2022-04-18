@@ -3,11 +3,30 @@ package handler
 import (
 	"net/http"
 
+	serv "github.com/Shin0kari/go_max"
 	"github.com/gin-gonic/gin"
 )
 
 func (h *Handler) createList(c *gin.Context) {
-	id, _ := c.Get(userCtx)
+	userId, err := getUserId(c)
+	if err != nil {
+		return
+	}
+
+	// для получения от пользователя данных для создания списков
+	var input serv.DataList
+	if err := c.BindJSON(&input); err != nil {
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	// call service method
+	id, err := h.services.DataList.Create(userId, input)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
 	c.JSON(http.StatusOK, map[string]interface{}{
 		"id": id,
 	})
