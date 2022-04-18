@@ -75,13 +75,13 @@ func (r *DataListPostgres) Update(userId, listId int, input serv.UpdateListInput
 	argId := 1
 
 	if input.Title != nil {
-		setValues = append(setValues, fmt.Sprintf("title=$1", argId))
+		setValues = append(setValues, fmt.Sprintf("title=$%d", argId))
 		args = append(args, *input.Title)
 		argId++
 	}
 
 	if input.Description != nil {
-		setValues = append(setValues, fmt.Sprintf("description=$1", argId))
+		setValues = append(setValues, fmt.Sprintf("description=$%d", argId))
 		args = append(args, *input.Description)
 		argId++
 	}
