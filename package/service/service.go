@@ -26,6 +26,7 @@ type DataItem interface {
 	GetAll(userId, listId int) ([]serv.DataItem, error)
 	GetById(userId, itemId int) (serv.DataItem, error)
 	Delete(userId, itemId int) error
+	Update(userId, itemId int, input serv.UpdateItemInput) error
 }
 
 // собираем все интерфейсы в 1-ом месте

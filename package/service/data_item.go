@@ -35,3 +35,7 @@ func (s *DataItemService) GetById(userId, itemId int) (serv.DataItem, error) {
 func (s *DataItemService) Delete(userId, itemId int) error {
 	return s.repo.Delete(userId, itemId)
 }
+
+func (s *DataItemService) Update(userId, itemId int, input serv.UpdateItemInput) error {
+	return s.repo.Update(userId, itemId, input)
+}
