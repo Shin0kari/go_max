@@ -3,7 +3,7 @@ port: "8000"
 # параметры бд
 db:
     username: "postgres"
-    host: "0.0.0.0"
+    host: "db"
     port: "5432"
     dbname: "postgres"
     sslmode: "disable"
