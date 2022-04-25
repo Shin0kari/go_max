@@ -27,3 +27,7 @@ func (s *DataItemService) Create(userId, listId int, item serv.DataItem) (int, e
 func (s *DataItemService) GetAll(userId, listId int) ([]serv.DataItem, error) {
 	return s.repo.GetAll(userId, listId)
 }
+
+func (s *DataItemService) GetById(userId, itemId int) (serv.DataItem, error) {
+	return s.repo.GetById(userId, itemId)
+}

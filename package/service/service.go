@@ -24,6 +24,7 @@ type DataList interface {
 type DataItem interface {
 	Create(userId, listId int, item serv.DataItem) (int, error)
 	GetAll(userId, listId int) ([]serv.DataItem, error)
+	GetById(userId, itemId int) (serv.DataItem, error)
 }
 
 // собираем все интерфейсы в 1-ом месте
