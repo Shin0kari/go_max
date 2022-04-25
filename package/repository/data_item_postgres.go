@@ -46,7 +46,7 @@ func (r *DataItemPostgres) Create(listId int, item serv.DataItem) (int, error) {
 // sql запрос для Select
 func (r *DataItemPostgres) GetAll(userId, listId int) ([]serv.DataItem, error) {
 	var items []serv.DataItem
-	query := fmt.Sprintf("SELECT * FROM %s ti INNER JOIN %s li on li.item_id = ti.id INNER JOIN %s ul on ul.list_id = li.list_id WHERE li.list_id = $1 AND ul.user_id = $2",
+	query := fmt.Sprintf("SELECT * ti.id, ti.title, ti.description, ti.done FROM %s INNER JOIN %s li on li.item_id = ti.id INNER JOIN %s ul on ul.list_id = li.list_id WHERE li.list_id = $1 AND ul.user_id = $2",
 		dataItemsTable, listsItemsTable, usersListsTable)
 	if err := r.db.Select(&items, query, listId, userId); err != nil {
 		return nil, err
