@@ -13,7 +13,7 @@ const (
 	usersTable      = "users"
 	dataListsTable  = "data_lists"
 	usersListsTable = "users_lists"
-	dataItemTable   = "data_items"
+	dataItemsTable  = "data_items"
 	listsItemsTable = "lists_items"
 )
 
