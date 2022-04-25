@@ -22,6 +22,7 @@ type DataItem interface {
 	Create(listId int, item serv.DataItem) (int, error)
 	GetAll(userId, listId int) ([]serv.DataItem, error)
 	GetById(userId, itemId int) (serv.DataItem, error)
+	Delete(userId, itemId int) error
 }
 
 type Repository struct {

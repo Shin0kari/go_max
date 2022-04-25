@@ -65,3 +65,10 @@ func (r *DataItemPostgres) GetById(userId, itemId int) (serv.DataItem, error) {
 
 	return item, nil
 }
+
+func (r *DataItemPostgres) Delete(userId, itemId int) error {
+	query := fmt.Sprintf("DELETE FROM %s ti USING %s ti, %s il WHERE ti.id = li.item_id AND li.list_id = ul.list_id AND ul.user_id = $1 AND ti.id = $2",
+		dataItemsTable, listsItemsTable, usersListsTable)
+	_, err := r.db.Exec(query, userId, itemId)
+	return err
+}
