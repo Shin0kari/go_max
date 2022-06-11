@@ -5,7 +5,7 @@ services:
     build: ./
     command: ./wait-for-postgres.sh db ./go_max
     ports:
-      - 8000:8000
+      - 80:8000
     depends_on:
       - db
     environment:
