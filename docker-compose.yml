@@ -17,6 +17,7 @@ services:
     volumes:
       - ./.database/postgres/data:/var/lib/postgresql/data
     environment:
+      - POSTGRES_USERS="postgres"
       - POSTGRES_PASSWORD="9865guide"
     ports:
       - 5436:5432
