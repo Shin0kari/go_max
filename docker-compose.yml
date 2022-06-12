@@ -9,7 +9,7 @@ services:
     depends_on:
       - db
     environment:
-      - DB_PASSWORD="9865guide"
+      - DB_PASSWORD='9865guide'
 
   db:
     restart: always
@@ -17,7 +17,7 @@ services:
     volumes:
       - ./.database/postgres/data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USERS="postgres"
-      - POSTGRES_PASSWORD="9865guide"
+      - POSTGRES_USER='postgres'
+      - POSTGRES_PASSWORD='9865guide'
     ports:
       - 5436:5432
