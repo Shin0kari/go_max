@@ -15,8 +15,8 @@ services:
     restart: always
     image: postgres:latest
     volumes:
-      - ../2. Init Database:/000001_init.up.d
-      - ../2. Init Database:/000001_init.down.d
+      - ../2. Init Database:/000001_init.up.sql
+      - ../2. Init Database:/000001_init.down.sql
       - ./.database/postgres/data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER="postgres"
