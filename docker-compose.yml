@@ -15,9 +15,11 @@ services:
     restart: always
     image: postgres:latest
     volumes:
+      - .:/000001_init.up.sql
+      - .:/000001_init.down.sql
       - ./.database/postgres/data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER="postgres"
-      - POSTGRES_PASSWORD="9865guide"
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=9865guide
     ports:
       - 5436:5432
