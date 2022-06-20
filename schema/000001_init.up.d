@@ -4,15 +4,15 @@ CREATE TABLE users (id serial not null unique,
                                                                                         password_hash varchar(255) not null);
 
 
-CREATE TABLE data_lists ( id serial not null unique,
-                                             title varchar(255) not null,
-                                                                description varchar(255));
+CREATE TABLE data_lists (id serial not null unique,
+                                            title varchar(255) not null,
+                                                               description varchar(255));
 
 
 CREATE TABLE users_lists
-    ( id serial not null unique,
-                         user_id int references users (id) on delete cascade not null,
-                                                                             list_id int references data_lists (id) on delete cascade not null);
+    (id serial not null unique,
+                        user_id int references users (id) on delete cascade not null,
+                                                                            list_id int references data_lists (id) on delete cascade not null);
 
 
 CREATE TABLE data_items (id serial not null unique,
